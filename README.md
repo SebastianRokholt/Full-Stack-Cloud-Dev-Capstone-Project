@@ -11,7 +11,7 @@ You must complete all the labs to successfully complete the project.
 1. Create an IBM cloud account if you don't have one already.
 2. Create an instance of the Natural Language Understanding (NLU) service.
 
-**Fork the Django server github repository and deploy the basic application**
+**Fork the github repository and deploy the basic application**
 1. Fork the repository in your account
 2. Clone the repository in the theia lab environment
 3. Create static pages to finish the user stories
