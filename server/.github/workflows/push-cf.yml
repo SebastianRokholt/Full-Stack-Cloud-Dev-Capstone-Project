@@ -1,0 +1,46 @@
+name: Build and deploy to IBM Cloud Foundry
+
+on: workflow_dispatch
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  IBM_CLOUD_REGION: us-south
+  IBM_CLOUD_GROUP: default
+  IBM_CLOUD_SPACE: dev
+  IBM_CLOUD_ORG:
+  MANIFEST_NAME: manifest.yml
+  IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
+
+defaults:
+  run:
+    working-directory: server
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install IBM CLI
+        run: |
+          curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+          ibmcloud --version
+          ibmcloud config --check-version=false
+        shell: bash
+      - name: Install CF plugin
+        run: ibmcloud cf install -f
+        shell: bash
+      - name: Log into IBM Cloud
+        run: |
+          ibmcloud login --apikey "$IBM_CLOUD_API" -r "$IBM_CLOUD_REGION" -g "$IBM_CLOUD_GROUP"
+        shell: bash
+      - name: Target CF
+        run: ibmcloud target --cf-api https://api.$IBM_CLOUD_REGION.cf.cloud.ibm.com -r $IBM_CLOUD_REGION -o $IBM_CLOUD_ORG -s $IBM_CLOUD_SPACE
+        shell: bash
+      - name: List all applications
+        run: ibmcloud cf apps
+        shell: bash
+      - name: Deploy manifest file
+        run: ibmcloud cf push -f ./$MANIFEST_NAME
+        shell: bash
