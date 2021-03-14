@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 # def about(request):
 # ...
 
+
 # Create a `contact` view to return a static contact page
 #def contact(request):
 
