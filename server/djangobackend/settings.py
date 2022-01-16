@@ -29,7 +29,8 @@ APPEND_SLASH = True
 
 ALLOWED_HOSTS = [
     "localhost", 
-    "sr-django-capstone.eu-de.mybluemix.net"
+    "127.0.0.1", 
+    "sr-django-capstone.eu-de.mybluemix.net", 
     ]
 
 
