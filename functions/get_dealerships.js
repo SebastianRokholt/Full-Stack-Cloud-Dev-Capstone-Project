@@ -8,9 +8,9 @@
   * main() will be run automatically when this action is invoked in IBM Cloud
   *
   * @param Cloud Functions actions accept a single parameter, which must be a JSON object.
-  *        In this case, the param can be an empty JSON object {}
-  *        or a JSON object with the key "state" and the name of a state as value. 
-  *        I.e: {"state": "Texas"}
+  *        In this case, the param can be an empty JSON object, a JSON object with the key "dealerID" and the 
+  *        id of a dealership as the value, or a JSON object with the key "state" and the name of a state as value. 
+  *        I.e: {} or {"state": "California"} or {"dealerID": "14"}
   * @return The action returns a JSON object consisting of the HTTP response, i.e:
   *         {
   *             "body": {
@@ -40,77 +40,72 @@
 
 /* Gets all dealerships in the database that match the specified state. */
 function main(params) {
-     credentials={
+    secret = {
     "COUCH_URL": "https://a7637d95-13fd-4d36-bd33-c43326d44b48-bluemix.cloudantnosqldb.appdomain.cloud",
     "IAM_API_KEY": "KvcAgqnvLvK8TRAqUujdAmrtR8mVwTjK2yHxDBDU9GQ1",
     "COUCH_USERNAME": "a7637d95-13fd-4d36-bd33-c43326d44b48-bluemix"
     };
 
-    return new Promise(function (resolve, reject) { 
+    return new Promise(function (resolve, reject) {
         const Cloudant = require('@cloudant/cloudant'); 
-        const cloudant = Cloudant({ 
-            url: credentials.COUCH_URL, 
-            plugins: {iamauth: {iamApiKey:credentials.IAM_API_KEY}} 
-        }); 
-
+        const cloudant = Cloudant({
+            url: secret.COUCH_URL,
+            plugins: {iamauth: {iamApiKey:secret.IAM_API_KEY}} 
+        });
         const dealershipDb = cloudant.use('dealerships'); 
-
-if (params.state) { 
-            // return dealerships for the specified state 
-            dealershipDb.find({
-  "selector": {
-   "state": {
-     "$eq": params.state  
-   }
- }
-}, function (err, result) { 
-                if (err) { 
-                    console.log(err) 
-                    reject(err); 
-                } 
-                let code=200; 
-                    if (result.docs.length==0) { 
-                        code= 404; 
-                    }
-                resolve({ 
-                    statusCode: code, 
-                    headers: {'Content-Type': 'application/json'}, 
-                    body: result 
-                }); 
-            }); 
-        } else if (params.id) { 
-            id=parseInt(params.dealerId) 
-          // return dealerships in the specified state 
-            dealershipDb.find({selector: {id:parseInt(params.id)}}, 
-            function (err, result) { 
-                if (err) { 
-                    console.log(err) 
-                    reject(err); 
-                } 
-                let code=200; 
-                    if (result.docs.length==0) { 
-                        code= 404; 
-                    }
-                resolve({ 
-                    statusCode: code, 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: result 
-                }); 
-            }); 
+        
+        if (params.dealerId) { 
+            // return dealership of specified dealership ID (if specified)
+            dealershipDb.find({"selector": {"id": parseInt(params.dealerId)}}, 
+                function (err, result) { 
+                        if (err) { 
+                            console.log(err) 
+                            reject(err); 
+                        } 
+                        let code=200; 
+                            if (result.docs.length==0) { 
+                                code= 404; 
+                            }
+                        resolve({ 
+                            statusCode: code, 
+                            headers: { 'Content-Type': 'application/json' }, 
+                            body: result 
+                        }); 
+                    }); 
+        } else if (params.state) { 
+            // return dealerships for the specified state (if specified)
+            dealershipDb.find({"selector": {"state": {"$eq": params.state}}}, 
+                function (err, result) { 
+                        if (err) { 
+                            console.log(err) 
+                            reject(err); 
+                        } 
+                        let code=200; 
+                            if (result.docs.length==0) { 
+                                code= 404; 
+                            }
+                        resolve({ 
+                            statusCode: code, 
+                            headers: {'Content-Type': 'application/json'}, 
+                            body: result 
+                        }); 
+                    }); 
         } else { 
-            // return all documents 
-            dealershipDb.list({ include_docs: true }, 
-            function (err, result) { 
-                if (err) { 
-                    console.log(err) 
-                    reject(err); 
-                } 
-            resolve({ 
-                    statusCode: 200, 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: result 
-                }); 
-            }); 
+            // return all documents if no parameters are specified
+            dealershipDb.list(
+                { include_docs: true }, 
+                function (err, result) { 
+                    if (err) { 
+                        console.log(err) 
+                        reject(err); 
+                    } 
+                    resolve({ 
+                        statusCode: 200, 
+                        headers: { 'Content-Type': 'application/json' }, 
+                        body: result 
+                    }); 
+                }
+            ); 
         } 
     });
-} 
+}
