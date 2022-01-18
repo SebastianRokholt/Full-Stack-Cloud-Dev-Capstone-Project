@@ -10,9 +10,22 @@ from datetime import datetime
 import logging
 import json
 
-# Get an instance of a logger
+# Getting an instance of a logger
 logger = logging.getLogger(__name__)
 
+
+# View to render the index page with a list of dealerships
+def get_dealerships(request):
+    if request.method == "GET":
+        context = {}
+        url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/dealership"
+        # Get dealers from the Cloudant DB
+        context["dealerships"] = get_dealers_from_cf(url)
+
+        # dealer_names = ' '.join([dealer.short_name for dealer in context["dealerships"]])
+        # return HttpResponse(dealer_names)
+
+        return render(request, 'djangoapp/index.html', context)
 
 # View to render a static about page
 def about(request):
@@ -88,25 +101,17 @@ def registration_request(request):
             return render(request, 'djangoapp/registration.html', context)
 
 
-# View to render the index page with a list of dealerships
-def get_dealerships(request):
-    if request.method == "GET":
-        url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/dealership"
-        # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
-        # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_names)
-
 # View to render the reviews of a dealer
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
         url = 'https://9bebcb01.eu-de.apigw.appdomain.cloud/api/review'
         reviews = get_dealer_reviews_from_cf(url, dealer_id=dealer_id)
-        context = {"reviews":  reviews}
-        return render(request, 'djangoapp/reviews.html', context)
+        context = {
+            "reviews":  reviews, 
+            "dealer_id": dealer_id
+        }
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 
 # View to submit a new review
