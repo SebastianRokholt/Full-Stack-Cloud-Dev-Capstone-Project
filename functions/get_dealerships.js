@@ -10,7 +10,7 @@
   * @param Cloud Functions actions accept a single parameter, which must be a JSON object.
   *        In this case, the param can be an empty JSON object, a JSON object with the key "dealerID" and the 
   *        id of a dealership as the value, or a JSON object with the key "state" and the name of a state as value. 
-  *        I.e: {} or {"state": "California"} or {"dealerID": "14"}
+  *        I.e: {} or {"state": "California"} or {"dealerId": "14"}
   * @return The action returns a JSON object consisting of the HTTP response, i.e:
   *         {
   *             "body": {
