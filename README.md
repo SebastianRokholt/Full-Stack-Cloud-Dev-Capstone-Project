@@ -13,7 +13,7 @@ The general idea is to build a website that allows users to select one of *Best 
 
 #### Architecture
 ![Application architecture model](capstone-project-model.png)
-__Application architecture__
+_Application architecture_
 
 The dealership and review data is located in an IBM Cloudant database, while data about users and cars is in a simple SQLite database. In order to access data from IBM Cloudant, I wrote three IBM Cloud Functions which were accessible through an API. 
 
