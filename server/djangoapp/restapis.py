@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 from decouple import config
@@ -132,8 +133,8 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # Calls the Watson NLU API and analyses the sentiment of a review
 def analyze_review_sentiments(review_text):
     # Watson NLU configuration 
-    url = config("WATSON_NLU_URL")
-    api_key = config("WATSON_NLU_API_KEY")
+    url = os.environ['WATSON_NLU_URL')
+    api_key = os.environ["WATSON_NLU_API_KEY"]
     version = '2020-08-01'
     authenticator = IAMAuthenticator(api_key)
     nlu = NaturalLanguageUnderstandingV1(authenticator=authenticator, version=version)
