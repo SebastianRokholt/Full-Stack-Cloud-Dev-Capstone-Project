@@ -3,3 +3,4 @@ Django
 gunicorn==20.0.4
 Pillow==8.0.1
 python-decouple==3.5
+ibm-watson==3.2.0

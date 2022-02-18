@@ -134,9 +134,9 @@ def analyze_review_sentiments(review_text):
     # Watson NLU configuration 
     url = config("WATSON_NLU_URL")
     api_key = config("WATSON_NLU_API_KEY")
-    version = '2020-08-01'
+    version = '2021-08-01'
     authenticator = IAMAuthenticator(api_key)
-    nlu = NaturalLanguageUnderstandingV1(authenticator=authenticator, version=version)
+    nlu = NaturalLanguageUnderstandingV1(version, authenticator)
     nlu.set_service_url(url)
     
     # get sentiment of the review
