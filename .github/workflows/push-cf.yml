@@ -10,6 +10,9 @@ env:
   IBM_CLOUD_ORG: Sebastian.Rokholt@ibm.com
   MANIFEST_NAME: manifest.yml
   IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
+  WATSON_NLU_API_KEY: ${{secrets.WATSON_NLU_API_KEY}}
+  WATSON_NLU_URL: ${{secrets.WATSON_NLU_URL}}
 
 defaults:
   run:
