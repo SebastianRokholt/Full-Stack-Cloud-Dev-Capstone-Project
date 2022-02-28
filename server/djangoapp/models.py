@@ -12,9 +12,11 @@ class CarMake(models.Model):
         return self.name
 
 # Car Model model
+
+
 class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, null=True, on_delete=models.CASCADE)
-    name = models.CharField(null= False, max_length=50)
+    name = models.CharField(null=False, max_length=50)
     dealer_id = models.IntegerField(null=True)
 
     SEDAN = "Sedan"
@@ -29,16 +31,19 @@ class CarModel(models.Model):
     BIKE = "Bike"
     SCOOTER = "Scooter"
     OTHER = "Other"
-    CAR_CHOICES = [(SEDAN, "Sedan"), (SUV, "SUV"), (WAGON, "Station wagon"), (SPORT, "Sports Car"), 
-                   (COUPE, "Coupe"), (MINIVAN, "Mini van"), (VAN, "Van"), (PICKUP, "Pick-up truck"), 
+    CAR_CHOICES = [(SEDAN, "Sedan"), (SUV, "SUV"), (WAGON, "Station wagon"), (SPORT, "Sports Car"),
+                   (COUPE, "Coupe"), (MINIVAN, "Mini van"), (VAN,
+                                                             "Van"), (PICKUP, "Pick-up truck"),
                    (TRUCK, "Truck"), (BIKE, "Motor bike"), (SCOOTER, "Scooter"), (OTHER, 'Other')]
-    model_type = models.CharField(null=False, max_length=15, choices=CAR_CHOICES, default=SEDAN)
+    model_type = models.CharField(
+        null=False, max_length=15, choices=CAR_CHOICES, default=SEDAN)
 
     YEAR_CHOICES = []
     for r in range(1969, (datetime.datetime.now().year+1)):
-        YEAR_CHOICES.append((r,r))
+        YEAR_CHOICES.append((r, r))
 
-    year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
+    year = models.IntegerField(
+        ('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
 
     def __str__(self):
         return self.name + ", " + str(self.year) + ", " + self.model_type
@@ -74,7 +79,7 @@ class DealerReview:
         self.name = name  # Name of the reviewer
         self.purchase = purchase  # Did the reviewer purchase the car? bool
         self.purchase_date = purchase_date
-        self.review = review # The actual review text
+        self.review = review  # The actual review text
         self.sentiment = sentiment  # Watson NLU sentiment analysis of review
 
     def __str__(self):
