@@ -19,14 +19,28 @@ The dealership and review data is located in an IBM Cloudant database, while dat
 
 Each review is analysed by IBM Watson in order to display the review's general sentiment (negative, neutral, positive). 
 
-#### Files
-Will add a description of the files and file structure later. 
-
-#### Setup 
-Will add a description about installation/setup later. 
-
-
-### For other Coursera learners viewing this repository:
+#### For other Coursera learners viewing this repository:
 If you're a fellow learner currently working though the IBM Full Stack Capstone Project, and you're looking at my repository because you're stuck with something in your own project, feel free to fork or otherwise make use of anything you find here. However, I would appreciate if you could leave the repo a star in return! ;)
 
+#### Setup 
+Clone the project:
+- ```cd Full\ Stack\ Cloud\ Dev\ Capstone\ Project/server```
+Install the required Python packages
+- ```python -m pip install -r requirements.txt```
+
+Create a [new Django Secret Key](https://humberto.io/blog/tldr-generate-django-secret-key/) 
+
+Run the development server: </br>
+- ```python manage.py createmigrations```
+- ```python manage.py migrate```
+- ```python manage.py runserver```
+
+Create a new superuser:
+- ```python manage.py createsuperuser```
+- Log in via the admin site (just add `/admin` at the end of the url)
+
+Push to IBM Cloud Foundry:
+- Install the IBM Cloud CLI and the cloud foundry plugin
+- Configure the `manifest.yml` file
+- `ìbmcloud cf push`
 
