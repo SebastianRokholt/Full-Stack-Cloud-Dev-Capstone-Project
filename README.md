@@ -19,9 +19,6 @@ The dealership and review data is located in an IBM Cloudant database, while dat
 
 Each review is analysed by IBM Watson in order to display the review's general sentiment (negative, neutral, positive). 
 
-#### For other Coursera learners viewing this repository:
-If you're a fellow learner currently working though the IBM Full Stack Capstone Project, and you're looking at my repository because you're stuck with something in your own project, feel free to fork or otherwise make use of anything you find here. However, I would appreciate if you could leave the repo a star in return! ;)
-
 #### Setup 
 Clone the project:
 - ```cd Full\ Stack\ Cloud\ Dev\ Capstone\ Project/server```
@@ -43,4 +40,8 @@ Push to IBM Cloud Foundry:
 - Install the IBM Cloud CLI and the cloud foundry plugin
 - Configure the `manifest.yml` file
 - `ìbmcloud cf push`
+
+
+### For other Coursera learners viewing this repository:
+If you're a fellow learner currently working though the IBM Full Stack Capstone Project, and you're looking at my repository because you're stuck with something in your own project, feel free to fork or otherwise make use of anything you find here. However, I would appreciate if you could leave the repo a star in return! ;)
 
