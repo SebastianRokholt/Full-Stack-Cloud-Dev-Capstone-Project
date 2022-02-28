@@ -8,6 +8,7 @@
         {% endif %}
         <div class="card-columns">
             {% for review in reviews %}
+                {% if review.car_make %}
                 <div class="card" style="height: 300px; overflow: scroll; overflow-x: hidden;">
                     <img src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" class="card-img-left" style="float: left; height: 40px; width: 40px; display: inline-block;">
                     <div class="card-body" style="text-align: center;">
@@ -16,6 +17,17 @@
                         <p class="card-text" style="text-align: left;">{{ review.review }}</p>
                     </div>
                 </div>
+                <!-- some review data may be missing , using default values-->
+                {% else %}
+                <div class="card" style="height: 300px; overflow: scroll; overflow-x: hidden;">
+                    <img src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" class="card-img-left" style="float: left; height: 40px; width: 40px; display: inline-block;">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title" style="display: inline-block;">Review</h5>
+                        <h5 class="card-title"></h5>
+                        <p class="card-text" style="text-align: left;">{{ review.review }}</p>
+                    </div>
+                </div>
+                {% endif %}
             {% endfor %}
         </div>
 
