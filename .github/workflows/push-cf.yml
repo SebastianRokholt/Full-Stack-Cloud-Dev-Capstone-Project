@@ -4,12 +4,13 @@ on: workflow_dispatch
 
 # Environment variables available to all jobs and steps in this workflow
 env:
+  env_type: PRODUCTION
   IBM_CLOUD_REGION: eu-de
   IBM_CLOUD_GROUP: Default
   IBM_CLOUD_SPACE: djangoserver-space
   IBM_CLOUD_ORG: Sebastian.Rokholt@ibm.com
   MANIFEST_NAME: manifest.yml
-  IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
+  IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}  # retrieved from Github repo Secrets
   SECRET_KEY: ${{secrets.SECRET_KEY}}
   WATSON_NLU_API_KEY: ${{secrets.WATSON_NLU_API_KEY}}
   WATSON_NLU_URL: ${{secrets.WATSON_NLU_URL}}

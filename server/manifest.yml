@@ -9,3 +9,15 @@
       - route: sr-django-capstone.eu-de.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
+# Environment variables 
+env:
+  env_type: PRODUCTION
+  IBM_CLOUD_REGION: eu-de
+  IBM_CLOUD_GROUP: Default
+  IBM_CLOUD_SPACE: djangoserver-space
+  IBM_CLOUD_ORG: Sebastian.Rokholt@ibm.com
+  MANIFEST_NAME: manifest.yml
+  IBM_CLOUD_API: IBM_CLOUD_API_KEY  # retrieved from IBM Cloud Application instance
+  SECRET_KEY: SECRET_KEY
+  WATSON_NLU_API_KEY: WATSON_NLU_API_KEY
+  WATSON_NLU_URL: WATSON_NLU_URL
